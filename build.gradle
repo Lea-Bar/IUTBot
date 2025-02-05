@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'fr.leabar.iutbot'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.mnode.ical4j:ical4j:4.1.0'
+    implementation("net.dv8tion:JDA:5.3.0") {
+        exclude module: 'opus-java'
+    }
+
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.36'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+shadowJar {
+    archiveBaseName.set('app')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+
+    mergeServiceFiles()
+
+    manifest {
+        attributes 'Main-Class': 'fr.leabar.iutbot.IUTBot'
+    }
+}
+
+tasks.build.dependsOn tasks.shadowJar
