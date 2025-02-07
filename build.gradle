@@ -29,7 +29,7 @@ test {
 }
 
 shadowJar {
-    archiveBaseName.set('app')
+    archiveBaseName.set('IUTBot')
     archiveClassifier.set('')
     archiveVersion.set('')
 
