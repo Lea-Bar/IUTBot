@@ -1,5 +1,7 @@
 package fr.leabar.iutbot.modules;
 
+import fr.leabar.iutbot.modules.config.ConfigModule;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,7 +10,7 @@ public class ModuleManager {
     private static final List<IModule> MODULES = new ArrayList<>();
 
     public static void registerModules(){
-
+        MODULES.add(new ConfigModule());
     }
 
     public static void startModules(){
