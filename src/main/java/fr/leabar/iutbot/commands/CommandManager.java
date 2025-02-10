@@ -50,7 +50,6 @@ public class CommandManager {
                 jda.upsertCommand(data).queue();
             }
         });
-
     }
 
     public CommandInfo getCommand(String commandName) {

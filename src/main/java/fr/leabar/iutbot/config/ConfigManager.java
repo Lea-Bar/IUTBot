@@ -3,6 +3,7 @@ package fr.leabar.iutbot.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import fr.leabar.iutbot.config.discord.DiscordConfig;
+import fr.leabar.iutbot.config.schedule.ScheduleWrapper;
 import fr.leabar.iutbot.utils.Tuple;
 import lombok.Getter;
 
@@ -22,6 +23,8 @@ public class ConfigManager {
 
     @Getter
     private DiscordConfig discordConfig;
+    @Getter
+    private ScheduleWrapper scheduleWrapper;
 
     private ConfigManager() {
     }
@@ -41,6 +44,7 @@ public class ConfigManager {
         try {
             createConfigDirectory();
             this.discordConfig = loadConfig("discord.json", DiscordConfig.class).getFirstElement();
+            this.scheduleWrapper = loadConfig("schedule.json", ScheduleWrapper.class).getFirstElement();
             return true;
         } catch (IOException e) {
             System.out.println("Failed to load configurations "+e);
