@@ -5,8 +5,6 @@ import com.google.gson.GsonBuilder;
 import fr.leabar.iutbot.config.discord.DiscordConfig;
 import fr.leabar.iutbot.utils.Tuple;
 import lombok.Getter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -14,7 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class ConfigManager {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigManager.class);
     private static final String CONFIG_DIR = "./config";
     private static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
@@ -47,7 +44,7 @@ public class ConfigManager {
             this.discordConfig = loadConfig("discord.json", DiscordConfig.class).getFirstElement();
             return true;
         } catch (IOException e) {
-            LOGGER.error("Failed to load configurations", e);
+            System.out.println("Failed to load configurations "+e);
             return false;
         }
     }

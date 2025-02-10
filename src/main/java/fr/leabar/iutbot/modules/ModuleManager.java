@@ -8,7 +8,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ModuleManager {
     private static final Set<IModule> MODULES = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
-
     public static void registerModules(){
         MODULES.add(new ConfigModule());
     }
