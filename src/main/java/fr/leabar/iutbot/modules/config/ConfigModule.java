@@ -6,8 +6,7 @@ import fr.leabar.iutbot.modules.IModule;
 public class ConfigModule implements IModule {
     @Override
     public void start() {
-        ConfigManager configManager = new ConfigManager();
-        configManager.loadAllConfig();
+        ConfigManager.getInstance().loadAllConfig();
     }
 
     @Override

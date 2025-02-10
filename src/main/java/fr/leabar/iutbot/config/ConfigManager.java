@@ -5,48 +5,103 @@ import com.google.gson.GsonBuilder;
 import fr.leabar.iutbot.config.discord.DiscordConfig;
 import fr.leabar.iutbot.utils.Tuple;
 import lombok.Getter;
-import lombok.SneakyThrows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class ConfigManager {
-    private final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigManager.class);
+    private static final String CONFIG_DIR = "./config";
+    private static final Gson GSON = new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
 
     @Getter
-    private static ConfigManager instance;
+    private static volatile ConfigManager instance;
+    private static final Object LOCK = new Object();
 
     @Getter
     private DiscordConfig discordConfig;
 
-    public ConfigManager(){
-        instance = this;
+    private ConfigManager() {
     }
 
-    public boolean loadAllConfig(){
-        Tuple<DiscordConfig, Boolean> discordConfigTuple = loadFile("./config/discord.json", DiscordConfig.class);
-        this.discordConfig = discordConfigTuple.getFirstElement();
-        return discordConfigTuple.getSecondElement();
-    }
-
-    @SneakyThrows
-    private <T> Tuple<T, Boolean> loadFile(String path, Class<T> objectClass){
-        File file = new File(path);
-        if(!file.getParentFile().exists()){
-            file.getParentFile().mkdirs();
+    public static ConfigManager getInstance() {
+        if (instance == null) {
+            synchronized (LOCK) {
+                if (instance == null) {
+                    instance = new ConfigManager();
+                }
+            }
         }
-        if(!file.exists()){
-            T obj = objectClass.getConstructor().newInstance();
-            Writer writer = new FileWriter(path);
-            GSON.toJson(obj, writer);
-            writer.flush();
-            writer.close();
-            return new Tuple<>(obj, false);
-        }
-        Reader reader = new FileReader(path);
-        T obj = GSON.fromJson(reader, objectClass);
-        reader.close();
-        return new Tuple<>(obj, true);
+        return instance;
     }
 
+    public boolean loadAllConfig() {
+        try {
+            createConfigDirectory();
+            this.discordConfig = loadConfig("discord.json", DiscordConfig.class).getFirstElement();
+            return true;
+        } catch (IOException e) {
+            LOGGER.error("Failed to load configurations", e);
+            return false;
+        }
+    }
+
+    public <T> Tuple<T, Boolean> loadConfig(String filename, Class<T> configClass) throws IOException {
+        Path path = Paths.get(CONFIG_DIR, filename);
+        if (!Files.exists(path)) {
+            return createDefaultConfig(path, configClass);
+        }
+        return loadExistingConfig(path, configClass);
+    }
+
+    private void createConfigDirectory() throws IOException {
+        Path configDir = Paths.get(CONFIG_DIR);
+        if (!Files.exists(configDir)) {
+            Files.createDirectories(configDir);
+        }
+    }
+
+    private <T> Tuple<T, Boolean> loadConfig(Path path, Class<T> configClass) throws IOException {
+        if (!Files.exists(path)) {
+            return createDefaultConfig(path, configClass);
+        }
+        return loadExistingConfig(path, configClass);
+    }
+
+    private <T> Tuple<T, Boolean> createDefaultConfig(Path path, Class<T> configClass) throws IOException {
+        T defaultConfig;
+        try {
+            defaultConfig = configClass.getDeclaredConstructor().newInstance();
+        } catch (ReflectiveOperationException e) {
+            throw new IOException("Failed to create default configuration instance", e);
+        }
+
+        try (Writer writer = Files.newBufferedWriter(path)) {
+            GSON.toJson(defaultConfig, writer);
+            return new Tuple<>(defaultConfig, false);
+        }
+    }
+
+    private <T> Tuple<T, Boolean> loadExistingConfig(Path path, Class<T> configClass) throws IOException {
+        try (Reader reader = Files.newBufferedReader(path)) {
+            T config = GSON.fromJson(reader, configClass);
+            if (config == null) {
+                throw new IOException("Failed to parse configuration file: " + path);
+            }
+            return new Tuple<>(config, true);
+        }
+    }
+
+    public void saveConfig(Object config, String filename) throws IOException {
+        Path path = Paths.get(CONFIG_DIR, filename);
+        try (Writer writer = Files.newBufferedWriter(path)) {
+            GSON.toJson(config, writer);
+        }
+    }
 }
