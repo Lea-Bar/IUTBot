@@ -1,7 +1,9 @@
 package fr.leabar.iutbot.modules;
 
+import java.util.concurrent.CompletableFuture;
+
 public interface IModule {
-    void start();
+    CompletableFuture<Boolean> start();
 
     void stop();
 }
