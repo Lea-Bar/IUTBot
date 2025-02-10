@@ -1,6 +1,7 @@
 package fr.leabar.iutbot.modules;
 
 import fr.leabar.iutbot.modules.config.ConfigModule;
+import fr.leabar.iutbot.modules.discord.LoadingBotModule;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,6 +11,7 @@ public class ModuleManager {
 
     public static void registerModules(){
         MODULES.add(new ConfigModule());
+        MODULES.add(new LoadingBotModule());
     }
 
     public static void startModules(){
