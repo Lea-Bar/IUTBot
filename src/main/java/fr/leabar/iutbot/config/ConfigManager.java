@@ -17,7 +17,6 @@ public class ConfigManager {
             .setPrettyPrinting()
             .create();
 
-    @Getter
     private static volatile ConfigManager instance;
     private static final Object LOCK = new Object();
 
