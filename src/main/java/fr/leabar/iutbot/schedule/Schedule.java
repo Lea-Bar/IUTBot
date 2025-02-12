@@ -4,14 +4,13 @@ import fr.leabar.iutbot.schedule.lesson.Lesson;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Collections;
-import java.util.Set;
+import java.time.LocalDate;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 @RequiredArgsConstructor
 public class Schedule {
-    private final Set<Lesson> lessons = Collections.newSetFromMap(new ConcurrentHashMap<>());
+    private final ConcurrentHashMap<LocalDate, Lesson> lessons = new ConcurrentHashMap<>();
     private final String schoolClass;
 
 }
