@@ -9,7 +9,7 @@ import lombok.Getter;
 
 import java.util.concurrent.CompletableFuture;
 
-public class LoadCommandsModule implements IModule {
+public class CommandsModule implements IModule {
     @Getter
     private CommandManager manager;
 
@@ -18,7 +18,7 @@ public class LoadCommandsModule implements IModule {
         return CompletableFuture.supplyAsync(() -> {
             this.manager = new CommandManager();
             manager.registerCommands(new InfoCommand());
-            ModuleManager.getModule(LoadingBotModule.class).ifPresent(module -> {
+            ModuleManager.getModule(BotModule.class).ifPresent(module -> {
                 module.getJdaInstance().addEventListener(new CommandEvents(manager));
             });
             return true;

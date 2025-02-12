@@ -1,7 +1,7 @@
 package fr.leabar.iutbot.commands;
 
 import fr.leabar.iutbot.modules.ModuleManager;
-import fr.leabar.iutbot.modules.discord.LoadingBotModule;
+import fr.leabar.iutbot.modules.discord.BotModule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.dv8tion.jda.api.JDA;
@@ -40,7 +40,7 @@ public class CommandManager {
             }
         }
         commands.put(slashCommand.name(), new CommandInfo(commandClass, method, slashCommand));
-        ModuleManager.getModule(LoadingBotModule.class).ifPresent(module -> {
+        ModuleManager.getModule(BotModule.class).ifPresent(module -> {
             JDA jda = module.getJdaInstance();
             if(slashCommand.guildOnly()){
                 for(Guild guild : jda.getGuilds()){

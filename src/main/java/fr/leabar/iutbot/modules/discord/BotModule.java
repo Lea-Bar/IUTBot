@@ -11,7 +11,7 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import java.util.concurrent.CompletableFuture;
 
-public class LoadingBotModule implements IModule {
+public class BotModule implements IModule {
     @Getter
     private JDA jdaInstance;
 

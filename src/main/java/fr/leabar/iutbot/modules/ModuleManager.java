@@ -1,11 +1,10 @@
 package fr.leabar.iutbot.modules;
 
 import fr.leabar.iutbot.modules.config.ConfigModule;
-import fr.leabar.iutbot.modules.discord.LoadCommandsModule;
-import fr.leabar.iutbot.modules.discord.LoadingBotModule;
+import fr.leabar.iutbot.modules.discord.CommandsModule;
+import fr.leabar.iutbot.modules.discord.BotModule;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 
 public class ModuleManager {
@@ -13,8 +12,8 @@ public class ModuleManager {
 
     public static void registerModules(){
         MODULES.add(new ConfigModule());
-        MODULES.add(new LoadingBotModule());
-        MODULES.add(new LoadCommandsModule());
+        MODULES.add(new BotModule());
+        MODULES.add(new CommandsModule());
     }
 
     public static void startModules(){
