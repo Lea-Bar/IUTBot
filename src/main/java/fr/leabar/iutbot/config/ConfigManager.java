@@ -43,9 +43,11 @@ public class ConfigManager {
     public boolean loadAllConfig() {
         try {
             createConfigDirectory();
-            this.discordConfig = loadConfig("discord.json", DiscordConfig.class).getFirstElement();
-            this.scheduleWrapper = loadConfig("schedule.json", ScheduleWrapper.class).getFirstElement();
-            return true;
+            Tuple<DiscordConfig, Boolean> discordConfigTuple = loadConfig("discord.json", DiscordConfig.class);
+            Tuple<ScheduleWrapper, Boolean> scheduleWrapperTuple = loadConfig("schedules.json", ScheduleWrapper.class);
+            this.discordConfig = discordConfigTuple.getFirstElement();
+            this.scheduleWrapper = scheduleWrapperTuple.getFirstElement();
+            return discordConfigTuple.getSecondElement() && scheduleWrapperTuple.getSecondElement();
         } catch (IOException e) {
             System.out.println("Failed to load configurations "+e);
             return false;

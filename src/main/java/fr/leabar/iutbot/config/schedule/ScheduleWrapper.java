@@ -15,7 +15,7 @@ public class ScheduleWrapper {
 
     public ScheduleWrapper() {
         this.scheduleConfigs = new ArrayList<>();
-        this.scheduleConfigs.add(new ScheduleConfig("https://www.exemple.fr/", 100, "S2-C"));
+        this.scheduleConfigs.add(new ScheduleConfig("https://www.exemple.fr/", "https://www.exemple.fr/S2", 100, "S2-C"));
     }
 
     public Optional<ScheduleConfig> getScheduleByClass(String schoolClass){
