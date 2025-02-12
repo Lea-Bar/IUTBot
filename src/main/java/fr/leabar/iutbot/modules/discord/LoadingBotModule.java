@@ -46,7 +46,7 @@ public class LoadingBotModule implements IModule {
 
     @Override
     public void stop() {
-        if(this.jdaInstance.getStatus().isInit()){
+        if(this.jdaInstance != null && this.jdaInstance.getStatus().isInit()){
             try {
                 this.jdaInstance.awaitShutdown();
             } catch (InterruptedException e) {

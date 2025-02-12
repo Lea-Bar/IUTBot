@@ -9,8 +9,8 @@ public class ConfigModule implements IModule {
     @Override
     public CompletableFuture<Boolean> start() {
         return CompletableFuture.supplyAsync(() -> {
-            ConfigManager.getInstance().loadAllConfig();
-            return true;
+            boolean loaded = ConfigManager.getInstance().loadAllConfig();
+            return loaded;
         });
     }
 
