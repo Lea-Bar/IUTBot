@@ -11,7 +11,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.mnode.ical4j:ical4j:4.1.0'
+    implementation 'net.sf.biweekly:biweekly:0.6.8'
+    
     implementation("net.dv8tion:JDA:5.3.0") {
         exclude module: 'opus-java'
     }
