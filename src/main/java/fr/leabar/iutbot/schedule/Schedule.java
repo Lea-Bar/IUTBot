@@ -12,10 +12,16 @@ import java.util.stream.Collectors;
 public class Schedule {
     private final List<Lesson> lessons;
     private final String schoolClass;
+    private final int roleID;
+    private final boolean loaded;
+    private final long lastTimeLoaded;
 
-    public Schedule(String schoolClass) {
+    public Schedule(String schoolClass, int roleID) {
         this.lessons = new ArrayList<>();
         this.schoolClass = schoolClass;
+        this.roleID = roleID;
+        this.loaded = false;
+        this.lastTimeLoaded = 0;
     }
 
     public List<Lesson> getLessonsByDate(LocalDate date) {
@@ -28,7 +34,5 @@ public class Schedule {
     public void addLesson(Lesson lesson) {
         lessons.add(lesson);
     }
-
-
 
 }

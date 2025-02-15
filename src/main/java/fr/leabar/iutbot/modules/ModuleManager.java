@@ -3,6 +3,7 @@ package fr.leabar.iutbot.modules;
 import fr.leabar.iutbot.modules.config.ConfigModule;
 import fr.leabar.iutbot.modules.discord.CommandsModule;
 import fr.leabar.iutbot.modules.discord.BotModule;
+import fr.leabar.iutbot.modules.schedule.ScheduleModule;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -12,6 +13,7 @@ public class ModuleManager {
 
     public static void registerModules(){
         MODULES.add(new ConfigModule());
+        MODULES.add(new ScheduleModule());
         MODULES.add(new BotModule());
         MODULES.add(new CommandsModule());
     }

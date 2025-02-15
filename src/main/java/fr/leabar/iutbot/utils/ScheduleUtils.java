@@ -20,8 +20,17 @@ public class ScheduleUtils {
 
     public static Lesson eventToLesson(VEvent event) {
         String subject = event.getSummary().getValue();
-        String teacher = event.getDescription().getValue().split("\n")[1].replace("Enseignant : ", "").trim();
-        String room = event.getLocation().getValue();
+        String teacher = "";
+        if(event.getDescription() != null){
+            String[] description = event.getDescription().getValue().split("\n");
+            if(description.length > 1){
+                teacher = description[1].replace("Enseignant : ", "").trim();
+            }
+        }
+        String room = "";
+        if(event.getLocation() != null){
+            room = event.getLocation().getValue();
+        }
         LocalDateTime start = event.getDateStart().getValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         LocalDateTime end = event.getDateEnd().getValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         return new Lesson(subject, teacher, room, start, end);
