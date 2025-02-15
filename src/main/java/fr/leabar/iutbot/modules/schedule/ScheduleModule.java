@@ -17,8 +17,6 @@ public class ScheduleModule implements IModule {
 
     public ScheduleModule() {
         this.httpClient = new OkHttpClient();
-
-        //
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime weekStart = now.with(WeekFields.of(Locale.getDefault()).dayOfWeek(), 1)
                 .withHour(0).withMinute(0).withSecond(0);
