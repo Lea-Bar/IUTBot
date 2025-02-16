@@ -2,6 +2,7 @@ package fr.leabar.iutbot.modules.discord;
 
 import fr.leabar.iutbot.commands.CommandManager;
 import fr.leabar.iutbot.commands.info.InfoCommand;
+import fr.leabar.iutbot.commands.schedule.ScheduleCommand;
 import fr.leabar.iutbot.events.CommandEvents;
 import fr.leabar.iutbot.modules.IModule;
 import fr.leabar.iutbot.modules.ModuleManager;
@@ -18,6 +19,7 @@ public class CommandsModule implements IModule {
         return CompletableFuture.supplyAsync(() -> {
             this.manager = new CommandManager();
             manager.registerCommands(new InfoCommand());
+            manager.registerCommands(new ScheduleCommand());
             ModuleManager.getModule(BotModule.class).ifPresent(module -> {
                 module.getJdaInstance().addEventListener(new CommandEvents(manager));
             });

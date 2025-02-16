@@ -75,7 +75,7 @@ public class ScheduleManager {
         return SCHEDULES.stream().filter(schedule -> schedule.getSchoolClass().equals(schoolClass)).findFirst();
     }
 
-    public Optional<Schedule> getSchedule(int roleID) {
+    public Optional<Schedule> getSchedule(long roleID) {
         return SCHEDULES.stream().filter(schedule -> schedule.getRoleID() == roleID).findFirst();
     }
 }

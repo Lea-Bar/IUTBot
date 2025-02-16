@@ -2,6 +2,7 @@ package fr.leabar.iutbot.schedule;
 
 import fr.leabar.iutbot.schedule.lesson.Lesson;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,11 +13,13 @@ import java.util.stream.Collectors;
 public class Schedule {
     private final List<Lesson> lessons;
     private final String schoolClass;
-    private final int roleID;
-    private final boolean loaded;
-    private final long lastTimeLoaded;
+    private final long roleID;
+    @Setter
+    private boolean loaded;
+    @Setter
+    private long lastTimeLoaded;
 
-    public Schedule(String schoolClass, int roleID) {
+    public Schedule(String schoolClass, long roleID) {
         this.lessons = new ArrayList<>();
         this.schoolClass = schoolClass;
         this.roleID = roleID;

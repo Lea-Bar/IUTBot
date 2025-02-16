@@ -8,6 +8,6 @@ import lombok.Getter;
 public class ScheduleConfig {
     private String urlS1;
     private String urlS2;
-    private int roleId;
+    private long roleId;
     private String schoolClass;
 }
